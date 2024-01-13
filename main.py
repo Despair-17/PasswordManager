@@ -1,7 +1,8 @@
 from database import Connection, Structure, ConnectionParameters, DatabaseService
 from database.connection import psycopg2
+from security import Encryption
 
-# print(dir())
+print(dir())
 #
 # param = ConnectionParameters()
 # struct = Structure(**param.__dict__)
