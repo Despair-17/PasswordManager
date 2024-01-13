@@ -4,15 +4,18 @@ from security import Encryption
 
 print(dir())
 #
+
+
 param = ConnectionParameters()
-# struct = Structure(**param.__dict__)
-# struct.create_tables()
-# struct.disconnect()
+# conn = Connection(**param.__dict__)
+# conn.connect()
+# conn.disconnect()
+# with Structure(**param.__dict__) as structure:
+#     structure.create_tables()
 
-service = DatabaseService(**param.__dict__)
-for i in range(10):
-    service.add_user_data(f'user{i}', 'password')
+with DatabaseService(**param.__dict__) as service:
+    for i in range(10):
+        service.add_user_data(f'user{i}', 'password')
 
-service.disconnect()
 # if __name__ == '__main__':
 #     pass

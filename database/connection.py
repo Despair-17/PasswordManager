@@ -1,7 +1,5 @@
 import psycopg2
 
-'''Унаследовать database_service и structure от абстрактного класса унаследованного от connection'''
-
 
 class Connection:
 
@@ -11,11 +9,25 @@ class Connection:
         self._db_name = db_name
         self._user = user
         self._password = password
-        self.connection = None
+        self._connection = None
 
-    def connect(self):
+    def __enter__(self):
+        self._connect()
+        self._connection.autocommit = True
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_val:
+            print(exc_type, exc_val, exc_tb)
+        self._disconnect()
+
+    @property
+    def connection(self):
+        return self._connection
+
+    def _connect(self):
         try:
-            self.connection = psycopg2.connect(
+            self._connection = psycopg2.connect(
                 host=self._host,
                 port=self._port,
                 database=self._db_name,
@@ -27,7 +39,7 @@ class Connection:
             # Доработать этот момент
             print('Error while connecting to db PostgreSQL', err)
 
-    def disconnect(self):
+    def _disconnect(self):
         try:
             self.connection.close()
             print('Disconnected from db PostgreSQL')

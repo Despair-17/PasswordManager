@@ -1,12 +1,10 @@
 from .connection import Connection
 
 
-class Structure:
+class Structure(Connection):
 
     def __init__(self, host: str, port: str, db_name: str, user: str, password: str):
-        self._db_connection = Connection(host, port, db_name, user, password)
-        self._db_connection.connect()
-        self._connection = self._db_connection.connection
+        super().__init__(host, port, db_name, user, password)
 
     def create_tables(self):
         with self._connection.cursor() as cursor:
@@ -44,8 +42,4 @@ class Structure:
                         FOREIGN KEY (service_id) REFERENCES services (service_id)
                     );"""
             )
-        self._connection.commit()
         print('Successfully created table')
-
-    def disconnect(self) -> None:
-        self._db_connection.disconnect()
