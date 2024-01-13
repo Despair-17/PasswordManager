@@ -1,5 +1,7 @@
 import psycopg2
 
+'''Унаследовать database_service и structure от абстрактного класса унаследованного от connection'''
+
 
 class Connection:
 

@@ -14,8 +14,8 @@ class Structure:
                 """CREATE TABLE IF NOT EXISTS users 
                     (
                         user_id SERIAL PRIMARY KEY,
-                        user_name VARCHAR(25) UNIQUE NOT NULL,
-                        user_password VARCHAR(25) NOT NULL
+                        user_name VARCHAR(50) UNIQUE NOT NULL,
+                        user_password VARCHAR(50) NOT NULL
                     );
                     
                    CREATE TABLE IF NOT EXISTS keys 
@@ -39,7 +39,7 @@ class Structure:
                         service_id INTEGER, 
                         login VARCHAR(50),
                         encrypted_password VARCHAR(255),
-                        clue VARCHAR(25),
+                        clue VARCHAR(30),
                         FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
                         FOREIGN KEY (service_id) REFERENCES services (service_id)
                     );"""
