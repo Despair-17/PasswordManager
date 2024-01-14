@@ -1,4 +1,5 @@
 import psycopg2
+from exceptions import LoginExistsError
 
 
 class Connection:
@@ -17,9 +18,10 @@ class Connection:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_val:
-            print(exc_type, exc_val, exc_tb)
         self._disconnect()
+        if isinstance(exc_val, LoginExistsError):
+            return False
+        return True
 
     @property
     def connection(self):

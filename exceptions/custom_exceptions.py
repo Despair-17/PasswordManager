@@ -1,0 +1,2 @@
+class LoginExistsError(Exception):
+    pass

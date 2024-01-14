@@ -1,5 +1,6 @@
-from .connection import Connection
+from .connection import Connection, LoginExistsError
 from security import Encryption
+from psycopg2 import errors
 
 
 class DatabaseService(Connection):
@@ -8,18 +9,20 @@ class DatabaseService(Connection):
         super().__init__(host, port, db_name, user, password)
 
     def add_user_data(self, login: str, password: str) -> None:
-        # Потенциальная ошибка, при добавлении уже существующих логинов
         with self._connection.cursor() as cursor:
-            cursor.execute(
-                f"""INSERT INTO users (user_name, user_password) 
-                    values ('{login}', '{password}');
-                    
-                    INSERT INTO keys (user_id, encryption_key)
-                    values (
-                        (SELECT user_id FROM users WHERE user_name = '{login}'), 
-                        '{Encryption.create_encryption_key().decode()}'
-                    );"""
-            )
+            try:
+                cursor.execute(
+                    f"""INSERT INTO users (user_name, user_password) 
+                        values ('{login}', '{password}');
+                        
+                        INSERT INTO keys (user_id, encryption_key)
+                        values (
+                            (SELECT user_id FROM users WHERE user_name = '{login}'), 
+                            '{Encryption.create_encryption_key().decode()}'
+                        );"""
+                )
+            except errors.UniqueViolation as err:
+                raise LoginExistsError(f'User name {login} is busy!') from err
 
     def get_user_data(self, login: str) -> tuple:
         with self._connection.cursor() as cursor:
