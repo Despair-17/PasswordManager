@@ -43,4 +43,14 @@ class Structure(Connection):
                         FOREIGN KEY (service_id) REFERENCES services (service_id)
                     );"""
             )
-        print('Successfully created table')
+        print('Successfully created tables')
+
+    def delete_table(self):
+        with self._connection.cursor() as cursor:
+            cursor.execute(
+                """DROP TABLE passwords;
+                   DROP TABLE keys;
+                   DROP TABLE users;
+                   DROP TABLE services;"""
+            )
+        print('Successfully droped tables')

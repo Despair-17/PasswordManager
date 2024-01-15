@@ -59,8 +59,6 @@ class CorrectPassword(AbstractDescriptor):
 
     def __get__(self, instance, owner):
         instance_attr = getattr(instance, self._attr)
-        # if len(instance_attr) > 60:
-        #     raise InvalidLenPassword('Password too long')
         if len(instance_attr) < 4:
             raise InvalidLenPassword('Password too short')
         if self._is_valid(instance_attr):

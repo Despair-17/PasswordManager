@@ -1,6 +1,13 @@
-import psycopg2
-from database import Connection
-from database import ConnectionParameters
+from database import DatabaseService, ConnectionParameters
+from exceptions import LoginExistsError, InvalidLenLogin, InvalidSymbolsLogin
+from exceptions import InvalidLenPassword, InvalidPasswordComplexity
+from .descriptors import CorrectLogin, CorrectPassword
 
 
-class Authentication: pass
+class Authentication:
+    login = CorrectLogin()
+    password = CorrectPassword()
+
+    def __init__(self, login: str, password: str):
+        self.login = login
+        self.password = password
