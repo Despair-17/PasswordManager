@@ -6,8 +6,19 @@ from user_management import Registration
 #
 param = ConnectionParameters()
 
-reg = Registration('User13', 'password')
+reg = Registration('aaa24', 'pass12312AAA')
 reg.create_account()
+
+r'[a-z]' and r'[A-Z]' and r'[0-9]'
+
+# _REGEX_LOGIN = re.compile(r'^\w+$')
+#
+#
+# def _is_valid(value: str):
+#     return bool(_REGEX_LOGIN.match(value))
+#
+# print(_is_valid('logi3_3n'))
+
 
 # conn = Connection(*param.fields)
 #

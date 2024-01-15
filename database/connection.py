@@ -1,5 +1,6 @@
 import psycopg2
-from exceptions import LoginExistsError
+from exceptions import *
+from exceptions import InvalidLenLogin, InvalidSymbolsLogin, InvalidLenPassword, InvalidPasswordComplexity
 
 
 class Connection:
@@ -19,7 +20,11 @@ class Connection:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._disconnect()
-        if isinstance(exc_val, LoginExistsError):
+        if isinstance(exc_val, (LoginExistsError,
+                                InvalidLenLogin,
+                                InvalidSymbolsLogin,
+                                InvalidLenPassword,
+                                InvalidPasswordComplexity)):
             return False
         return True
 
