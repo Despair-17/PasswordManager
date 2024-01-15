@@ -1,7 +1,7 @@
 import bcrypt
 
 
-class PasswordHashing:
+class Hashing:
 
     @staticmethod
     def get_salt() -> bytes:
@@ -12,5 +12,5 @@ class PasswordHashing:
         return bcrypt.hashpw(password.encode(), salt)
 
     @staticmethod
-    def verify_password(input_password: str, hashed_password: str, stored_salt: bytes):
-        return bcrypt.hashpw(input_password.encode(), stored_salt) == hashed_password.encode()
+    def verify_password(input_password: str, hashed_password: str, stored_salt: str) -> bool:
+        return bcrypt.hashpw(input_password.encode(), stored_salt.encode()) == hashed_password.encode()

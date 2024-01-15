@@ -1,6 +1,6 @@
 from database import Connection, Structure, ConnectionParameters, DatabaseService
 from database.connection import psycopg2
-from user_management import Registration
+from user_management import Registration, Authentication
 
 # print(dir())
 #
@@ -17,11 +17,20 @@ param = ConnectionParameters()
 
 # with Structure(*param.fields) as structure:
 #     structure.delete_table()
+auth = Authentication('user1', 'password123A')
+if auth.authenticate_account():
+    print('Logged in successfully')
+else:
+    print('Wrong login or password')
 
-with DatabaseService(*param.fields) as service:
-    for i in range(5):
-        reg = Registration(f'user{i}', 'password123A')
-        reg.create_account()
+
+
+# with DatabaseService(*param.fields) as cursor:
+#     cursor.get_user_data('user1')
+
+# for i in range(15, 100):
+#     reg = Registration(f'user{i}', 'password123A')
+#     reg.create_account()
 
 # if __name__ == '__main__':
 #     pass

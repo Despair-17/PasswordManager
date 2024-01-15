@@ -26,7 +26,7 @@ class Connection:
                                 InvalidLenPassword,
                                 InvalidPasswordComplexity)):
             return False
-        return True
+        return False
 
     @property
     def connection(self):

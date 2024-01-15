@@ -1,2 +1,2 @@
 from .encryption import Encryption
-from .password_hashing import PasswordHashing
+from .password_hashing import Hashing

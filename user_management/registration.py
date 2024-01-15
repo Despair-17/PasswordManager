@@ -1,22 +1,16 @@
 from database import DatabaseService, ConnectionParameters
-from exceptions import LoginExistsError, InvalidLenLogin, InvalidSymbolsLogin
-from exceptions import InvalidLenPassword, InvalidPasswordComplexity
-from .descriptors import CorrectLogin, CorrectPassword
+from exceptions import *
+from .user import User
 
 
-class Registration:
-    login = CorrectLogin()
-    password = CorrectPassword()
+class Registration(User):
 
-    def __init__(self, login: str, password: str):
-        self.login = login
-        self.password = password
-
-    def create_account(self) -> None:
+    def create_account(self) -> bool:
         try:
-            with DatabaseService(*ConnectionParameters().fields) as service:
-                service.add_user_data(self.login, self.password)
+            with DatabaseService(*ConnectionParameters().fields) as cursor:
+                cursor.add_user_data(self.login, self.password)
+            return True
         except (LoginExistsError, InvalidLenLogin,
                 InvalidSymbolsLogin, InvalidSymbolsLogin,
-                InvalidLenPassword, InvalidPasswordComplexity) as err:
-            print(err)
+                InvalidLenPassword, InvalidPasswordComplexity):
+            return False
