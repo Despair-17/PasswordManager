@@ -5,9 +5,9 @@ from user_management import Registration
 # print(dir())
 #
 param = ConnectionParameters()
-
-reg = Registration('user0', 'password123A')
-reg.create_account()
+#
+# reg = Registration('user0', 'password123A')
+# reg.create_account()
 
 # b'$2b$12$zNQ3VIyQFZt7FLWo59POuu' 29
 # b'$2b$12$zNQ3VIyQFZt7FLWo59POuu4Ij7iLFMc5PXKrdLpouZ66QCk/C4une' 60
@@ -16,14 +16,14 @@ reg.create_account()
 #
 # conn._connect()
 # conn._disconnect()
-
+#
 # with Structure(*param.fields) as structure:
 #     structure.create_tables()
 #
-# with DatabaseService(*param.fields) as service:
-#     for i in range(5):
-#         reg = Registration(f'user{i}', 'password123A')
-#         reg.create_account()
+with DatabaseService(*param.fields) as service:
+    for i in range(5):
+        reg = Registration(f'user{i}', 'password123A')
+        reg.create_account()
 
 # if __name__ == '__main__':
 #     pass

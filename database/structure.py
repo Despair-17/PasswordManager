@@ -12,8 +12,9 @@ class Structure(Connection):
                 """CREATE TABLE IF NOT EXISTS users 
                     (
                         user_id SERIAL PRIMARY KEY,
-                        user_name VARCHAR(50) UNIQUE NOT NULL,
-                        user_password VARCHAR(60) NOT NULL
+                        username VARCHAR(50) UNIQUE NOT NULL,
+                        hashed_password VARCHAR(60) NOT NULL,
+                        salt VARCHAR(29) NOT NULL
                     );
                     
                    CREATE TABLE IF NOT EXISTS keys 

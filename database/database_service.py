@@ -1,6 +1,7 @@
 from .connection import Connection, LoginExistsError
 from security import Encryption
 from psycopg2 import errors
+from security import PasswordHashing
 
 
 class DatabaseService(Connection):
@@ -10,14 +11,16 @@ class DatabaseService(Connection):
 
     def add_user_data(self, login: str, password: str) -> None:
         with self._connection.cursor() as cursor:
+            salt = PasswordHashing.get_salt()
+            hashed_password = PasswordHashing.hash_password(password, salt)
             try:
                 cursor.execute(
-                    f"""INSERT INTO users (user_name, user_password) 
-                        values ('{login}', '{password}');
+                    f"""INSERT INTO users (username, hashed_password, salt) 
+                        values ('{login}', '{hashed_password.decode()}', '{salt.decode()}');
                         
                         INSERT INTO keys (user_id, encryption_key)
                         values (
-                            (SELECT user_id FROM users WHERE user_name = '{login}'), 
+                            (SELECT user_id FROM users WHERE username = '{login}'), 
                             '{Encryption.create_encryption_key().decode()}'
                         );"""
                 )
