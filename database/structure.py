@@ -13,7 +13,7 @@ class Structure(Connection):
                     (
                         user_id SERIAL PRIMARY KEY,
                         user_name VARCHAR(50) UNIQUE NOT NULL,
-                        user_password VARCHAR(50) NOT NULL
+                        user_password VARCHAR(60) NOT NULL
                     );
                     
                    CREATE TABLE IF NOT EXISTS keys 

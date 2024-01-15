@@ -9,7 +9,8 @@ param = ConnectionParameters()
 reg = Registration('user0', 'password123A')
 reg.create_account()
 
-
+# b'$2b$12$zNQ3VIyQFZt7FLWo59POuu' 29
+# b'$2b$12$zNQ3VIyQFZt7FLWo59POuu4Ij7iLFMc5PXKrdLpouZ66QCk/C4une' 60
 # conn = Connection(*param.fields)
 #
 #
