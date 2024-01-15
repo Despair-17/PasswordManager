@@ -14,18 +14,16 @@ class Registration:
         self.conn_parameters = ConnectionParameters().fields
 
     def create_account(self) -> None:
-        with DatabaseService(*self.conn_parameters) as service:
-            service.add_user_data(self.login, self.password)
-        # try:
-        #     with DatabaseService(*self.conn_parameters) as service:
-        #         service.add_user_data(self.login, self.password)
-        # except LoginExistsError as err:
-        #     print(err)
-        # except InvalidLenLogin as err:
-        #     print(err)
-        # except InvalidSymbolsLogin as err:
-        #     print(err)
-        # except InvalidLenPassword as err:
-        #     print(err)
-        # except InvalidPasswordComplexity as err:
-        #     print(err)
+        try:
+            with DatabaseService(*self.conn_parameters) as service:
+                service.add_user_data(self.login, self.password)
+        except LoginExistsError as err:
+            print(err)
+        except InvalidLenLogin as err:
+            print(err)
+        except InvalidSymbolsLogin as err:
+            print(err)
+        except InvalidLenPassword as err:
+            print(err)
+        except InvalidPasswordComplexity as err:
+            print(err)

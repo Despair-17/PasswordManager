@@ -6,18 +6,8 @@ from user_management import Registration
 #
 param = ConnectionParameters()
 
-reg = Registration('aaa24', 'pass12312AAA')
+reg = Registration('user0', 'password123A')
 reg.create_account()
-
-r'[a-z]' and r'[A-Z]' and r'[0-9]'
-
-# _REGEX_LOGIN = re.compile(r'^\w+$')
-#
-#
-# def _is_valid(value: str):
-#     return bool(_REGEX_LOGIN.match(value))
-#
-# print(_is_valid('logi3_3n'))
 
 
 # conn = Connection(*param.fields)
@@ -26,11 +16,13 @@ r'[a-z]' and r'[A-Z]' and r'[0-9]'
 # conn._connect()
 # conn._disconnect()
 
-# with Structure(**param.fields) as structure:
+# with Structure(*param.fields) as structure:
 #     structure.create_tables()
 #
 # with DatabaseService(*param.fields) as service:
-#     service.add_user_data(f'user0', 'password')
+#     for i in range(5):
+#         reg = Registration(f'user{i}', 'password123A')
+#         reg.create_account()
 
 # if __name__ == '__main__':
 #     pass

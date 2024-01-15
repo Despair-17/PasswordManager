@@ -11,13 +11,15 @@ class AbstractDescriptor(ABC):
         self._attr = f'_{attr}'
 
     # Этот должен быть тоже абстрактным
+    @abstractmethod
     def __set__(self, instance, value):
         if not isinstance(value, str):
-            raise TypeError('invalid data type, str required')
-        setattr(instance, self._attr, value.lower())
+            raise TypeError('Invalid data type, str required')
+        ...
 
     @abstractmethod
     def __get__(self, instance, owner):
+        ...
         if instance is None:
             return self
         return getattr(instance, self._attr)
@@ -29,15 +31,19 @@ class AbstractDescriptor(ABC):
 
 class CorrectLogin(AbstractDescriptor):
 
+    def __set__(self, instance, value):
+        super().__set__(instance, value)
+        setattr(instance, self._attr, value.lower())
+
     def __get__(self, instance, owner):
         instance_attr = getattr(instance, self._attr)
         if len(instance_attr) > 50:
-            raise InvalidLenLogin('login too long')
+            raise InvalidLenLogin('Login too long')
         if len(instance_attr) < 4:
-            raise InvalidLenLogin('login too short')
+            raise InvalidLenLogin('Login too short')
         if self._is_valid(instance_attr):
             raise InvalidSymbolsLogin(
-                'the login can contain letters of the Latin alphabet (a–z), numbers (0–9) and periods (.)'
+                'The login can contain letters of the Latin alphabet (a–z), numbers (0–9) and periods (.)'
             )
         return super().__get__(instance, owner)
 
@@ -47,15 +53,19 @@ class CorrectLogin(AbstractDescriptor):
 
 class CorrectPassword(AbstractDescriptor):
 
+    def __set__(self, instance, value):
+        super().__set__(instance, value)
+        setattr(instance, self._attr, value)
+
     def __get__(self, instance, owner):
         instance_attr = getattr(instance, self._attr)
         if len(instance_attr) > 50:
-            raise InvalidLenPassword('password too long')
+            raise InvalidLenPassword('Password too long')
         if len(instance_attr) < 4:
-            raise InvalidLenPassword('password too short')
+            raise InvalidLenPassword('Password too short')
         if self._is_valid(instance_attr):
             raise InvalidPasswordComplexity(
-                'the password must contain at least one number, an uppercase and a lowercase letter'
+                'The password must contain at least one number, an uppercase and a lowercase letter'
             )
         return super().__get__(instance, owner)
 
