@@ -28,7 +28,7 @@ class Structure(Connection):
                    CREATE TABLE IF NOT EXISTS services 
                     (
                         service_id SERIAL PRIMARY KEY,
-                        service_name TEXT
+                        service_name TEXT UNIQUE NOT NULL
                     );
                     
                    CREATE TABLE IF NOT EXISTS passwords
@@ -38,7 +38,7 @@ class Structure(Connection):
                         service_id INTEGER, 
                         login VARCHAR(50),
                         encrypted_password VARCHAR(255),
-                        clue VARCHAR(30),
+                        description VARCHAR(30),
                         FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
                         FOREIGN KEY (service_id) REFERENCES services (service_id)
                     );"""

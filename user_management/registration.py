@@ -1,6 +1,6 @@
+from .user import User
 from database import DatabaseService, ConnectionParameters
 from exceptions import *
-from .user import User
 
 
 class Registration(User):
