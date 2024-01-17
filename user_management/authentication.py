@@ -11,6 +11,7 @@ class Authentication(User):
         self._stored_salt = None
 
     def authenticate_account(self) -> bool:
+        # added user_id in return tuple[int|None, bool]
         with UserService(*ConnectionParameters().fields) as cursor:
             user_data = cursor.get_user_data(getattr(self, '_login'))
             if not user_data:
