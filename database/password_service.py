@@ -52,7 +52,7 @@ class PasswordService(Connection):
         with self._connection.cursor() as cursor:
             cursor.execute(
                 f"""UPDATE passwords
-                    SET encrypted_password = {new_encrypted_password}
+                    SET encrypted_password = '{new_encrypted_password}'
                     WHERE user_id = '{user_id}' and service_id = '{service_id}' and login = '{login}'; """
             )
 

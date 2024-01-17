@@ -23,10 +23,10 @@ class UserService(Connection):
             except errors.UniqueViolation as err:
                 raise LoginExistsError(f'User name {username} is busy!') from err
 
-    def get_user_data(self, username: str) -> tuple:  # added annotation and user_id in return
+    def get_user_data(self, username: str) -> tuple[int, str, str]:
         with self._connection.cursor() as cursor:
             cursor.execute(
-                f"""SELECT hashed_password, salt
+                f"""SELECT user_id, hashed_password, salt
                     FROM users
                     WHERE username = '{username}';"""
             )

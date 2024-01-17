@@ -10,11 +10,12 @@ class Authentication(User):
         self._hashed_password = None
         self._stored_salt = None
 
-    def authenticate_account(self) -> bool:
-        # added user_id in return tuple[int|None, bool]
+    def authenticate_account(self) -> tuple[int | None, bool]:
         with UserService(*ConnectionParameters().fields) as cursor:
             user_data = cursor.get_user_data(getattr(self, '_login'))
             if not user_data:
-                return False
-            self._hashed_password, self._stored_salt = cursor.get_user_data(self.login)
-            return Hashing.verify_password(getattr(self, '_password'), self._hashed_password, self._stored_salt)
+                return None, False
+            user_id, self._hashed_password, self._stored_salt = user_data
+            return user_id, Hashing.verify_password(getattr(self, '_password'),
+                                                    self._hashed_password,
+                                                    self._stored_salt)

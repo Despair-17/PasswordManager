@@ -3,9 +3,12 @@ from database import ConnectionParameters
 from security import Encryption
 from itertools import starmap, chain
 from typing import Iterator
+from string import ascii_letters, digits
+import secrets
 
 
 class PasswordManager(PasswordService):
+    _SYMBOLS = '{0}{1}{2}'.format(ascii_letters, digits, '!@#$%^&*()-_=+')
 
     def __init__(self):
         super().__init__(*ConnectionParameters().fields)
@@ -40,6 +43,5 @@ class PasswordManager(PasswordService):
         service_id = super().get_or_insert_service_id(service_name)
         super().delete_password(user_id, service_id, login)
 
-    @staticmethod
-    def gen_password():
-        pass
+    def gen_password(self, length: int = 12):
+        return ''.join(secrets.choice(self._SYMBOLS) for _ in range(length))
