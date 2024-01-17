@@ -1,4 +1,5 @@
 from .connection import *
 from .structure import *
 from .config import *
-from .database_service import DatabaseService
+from .user_service import UserService
+from .password_service import PasswordService

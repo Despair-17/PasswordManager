@@ -1,6 +1,5 @@
 import psycopg2
 from exceptions import *
-from exceptions import InvalidLenLogin, InvalidSymbolsLogin, InvalidLenPassword, InvalidPasswordComplexity
 
 
 class Connection:
@@ -41,7 +40,7 @@ class Connection:
                 user=self._user,
                 password=self._password
             )
-            print('Successfully connected to the db PostgreSQL')
+            # print('Successfully connected to the db PostgreSQL')
         except Exception as err:
             # Доработать этот момент
             print('Error while connecting to db PostgreSQL', err)
@@ -49,7 +48,7 @@ class Connection:
     def _disconnect(self):
         try:
             self.connection.close()
-            print('Disconnected from db PostgreSQL')
+            # print('Disconnected from db PostgreSQL')
         except Exception as err:
             # Доработать этот момент
             print('Error while disconnecting', err)

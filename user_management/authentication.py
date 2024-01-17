@@ -1,5 +1,5 @@
 from .user import User
-from database import DatabaseService, ConnectionParameters
+from database import UserService, ConnectionParameters
 from security import Hashing
 
 
@@ -10,8 +10,8 @@ class Authentication(User):
         self._hashed_password = None
         self._stored_salt = None
 
-    def authenticate_account(self):
-        with DatabaseService(*ConnectionParameters().fields) as cursor:
+    def authenticate_account(self) -> bool:
+        with UserService(*ConnectionParameters().fields) as cursor:
             user_data = cursor.get_user_data(getattr(self, '_login'))
             if not user_data:
                 return False

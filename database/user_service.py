@@ -1,10 +1,9 @@
 from .connection import Connection, LoginExistsError
-from security import Encryption
+from security import Encryption, Hashing
 from psycopg2 import errors
-from security import Hashing
 
 
-class DatabaseService(Connection):
+class UserService(Connection):
 
     def __init__(self, host: str, port: str, db_name: str, user: str, password: str):
         super().__init__(host, port, db_name, user, password)
@@ -43,33 +42,4 @@ class DatabaseService(Connection):
                 f"""DELETE
                     FROM users
                     WHERE user_name = '{username}';"""
-            )
-
-    def get_or_insert_service_id(self, service_name: str) -> int:
-        service_name = service_name.lower()
-        with self._connection.cursor() as cursor:
-            cursor.execute(
-                f"""INSERT INTO services (service_id, service_name)
-                    VALUES (DEFAULT, '{service_name}')
-                    ON CONFLICT (service_name) DO NOTHING;
-                    
-                    SELECT service_id
-                    FROM services
-                    WHERE service_name = '{service_name}';"""
-            )
-            return cursor.fetchone()[0]
-
-    def insert_password(self, user_id: int, service_id: int, login: str, password: str, description: str = '') -> None:
-        with self._connection.cursor() as cursor:
-            cursor.execute(
-                f"""SELECT encryption_key
-                    FROM keys
-                    WHERE user_id = '{user_id}'"""
-            )
-            encryption_key = cursor.fetchone()[0]
-            encrypted_password = Encryption.encode_password(encryption_key, password)
-
-            cursor.execute(
-                f"""INSERT INTO passwords (user_id, service_id, login, encrypted_password, description)
-                    VALUES ('{user_id}', '{service_id}', '{login}', '{encrypted_password}', '{description}');"""
             )
