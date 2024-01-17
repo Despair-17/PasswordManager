@@ -14,7 +14,7 @@ class Encryption:
         return encoded_password.decode()
 
     @staticmethod
-    def decode_password(key: bytes, encrypted_password: bytes) -> str:
-        cipher_suite = Fernet(key)
-        decoded_password = cipher_suite.decrypt(encrypted_password)
+    def decode_password(key: str, encrypted_password: str) -> str:
+        cipher_suite = Fernet(key.encode())
+        decoded_password = cipher_suite.decrypt(encrypted_password.encode())
         return decoded_password.decode()
