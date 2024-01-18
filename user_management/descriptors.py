@@ -38,12 +38,12 @@ class CorrectLogin(AbstractDescriptor):
     def __get__(self, instance, owner):
         instance_attr = getattr(instance, self._attr)
         if len(instance_attr) > 50:
-            raise InvalidLenLogin('Login too long')
+            raise InvalidLenLogin('Login too long!')
         if len(instance_attr) < 4:
-            raise InvalidLenLogin('Login too short')
+            raise InvalidLenLogin('Login too short!')
         if self._is_valid(instance_attr):
             raise InvalidSymbolsLogin(
-                'The login can contain letters of the Latin alphabet (a–z), numbers (0–9) and periods (.)'
+                'The login must contain letters of the Latin alphabet (a–z),\nnumbers (0–9) and periods (.)!'
             )
         return super().__get__(instance, owner)
 
@@ -60,10 +60,10 @@ class CorrectPassword(AbstractDescriptor):
     def __get__(self, instance, owner):
         instance_attr = getattr(instance, self._attr)
         if len(instance_attr) < 4:
-            raise InvalidLenPassword('Password too short')
+            raise InvalidLenPassword('Password too short!')
         if self._is_valid(instance_attr):
             raise InvalidPasswordComplexity(
-                'The password must contain at least one number, an uppercase and a lowercase letter'
+                'The password must contain at least one number, an up-\npercase and a lowercase letter!'
             )
         return super().__get__(instance, owner)
 

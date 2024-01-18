@@ -8,7 +8,6 @@ from password_management import PasswordManager
 #
 param = ConnectionParameters()
 
-
 # reg = Registration('user0', 'password123A')
 # reg.create_account()
 
@@ -33,13 +32,12 @@ param = ConnectionParameters()
 #     cursor.delete_password(1, 'facebook.com', 'login2')
 #     print(*cursor.get_passwords(1), sep='\n')
 
-auth = Authentication('user1', 'password123A')
-
-user_id, flag = auth.authenticate_account()
-if flag:
-    print('Logged in successfully')
-else:
-    print('Wrong login or password')
+# auth = Authentication('user1', 'password123A')
+# user_id, flag = auth.authenticate_account()
+# if flag:
+#     print('Logged in successfully')
+# else:
+#     print('Wrong login or password')
 
 # if __name__ == '__main__':
 #     pass
