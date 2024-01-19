@@ -30,8 +30,8 @@ class PasswordManager(PasswordService):
                                          description
                                      ),
                                      iterator_passwords)
-        iterator_titles = (('Services', 'Logins', 'Passwords', 'Descriptions'),)
-        iterator_passwords = chain(iterator_titles, iterator_passwords)
+        # iterator_titles = (('Services', 'Logins', 'Passwords', 'Descriptions'),)
+        # iterator_passwords = chain(iterator_titles, iterator_passwords)
         return iterator_passwords
 
     def update_password(self, user_id: int, service_name: str, login: str, new_password: str) -> None:
